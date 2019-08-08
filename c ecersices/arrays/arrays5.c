@@ -12,7 +12,7 @@ int main(){
 	int most=0;
 	getArr(arr,size);
 	printArr(arr,size);
-	sortAscendingArr( arr, size);
+	/*sortAscendingArr( arr, size);*/
 	most=mostArr(arr, size);
 	printf("the value that occured the most is %d\n",most);
 
@@ -46,7 +46,7 @@ void sortAscendingArr(int* arr, int size){
 		}
 	}
 }
-int mostArr(int* arr, int size){
+/*int mostArr(int* arr, int size){
 	int i=0, maxVal=0;
 	int currMax=1;
 	int curr=1;
@@ -64,6 +64,23 @@ int mostArr(int* arr, int size){
 		}
 	}
 	return maxVal;
+}*/
+int mostArr(int* arr, int size){
+	int i=0,j=0,max=0,most=0,currval,curr;
+	for (i=0;i<size;i++){
+		currval=arr[i];
+		curr=1;
+		for(j=i+1;j<size;j++){
+			if (currval==arr[j]){
+				curr++;
+			}
+		}
+		if (curr>max){
+			max=curr;
+			most=currval;
+		}
+	}
+	return most;
 }
 
 void swap(int* x, int* y){
