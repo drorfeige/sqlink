@@ -36,6 +36,7 @@ void random(int* lotto, int size){
 			lotto[i]=lotto[i]==0?49:lotto[i];
 			for (j=0;j<i;j++){
 				copy=lotto[i]==lotto[j]?1:0;
+				break;
 			}
 		}while(copy);
 	}
@@ -63,9 +64,10 @@ void swap(int* x, int* y){
 }
 
 void printLotto(int* lotto, int size){
-	int i=0,j=0;
+	int i=0,j=0,k=1;
+	printf(" 12345678910\n0");
 	for(i=1;i<50;i++){
-		if(lotto[j]==i){
+		if(lotto[j]==i && j<size){
 			printf("+");
 			j++;
 		}
@@ -74,6 +76,7 @@ void printLotto(int* lotto, int size){
 		}
 		if(i%10==0){
 			printf("\n");
+			printf("%d",k++);
 		}
 	}
 	printf("\n");
