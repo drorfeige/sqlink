@@ -8,19 +8,28 @@ DA* createDA(int Capacity){
 	DA* newSt;
 	newSt=(DA*)malloc(sizeof(DA));
 	if(newSt){
-		newSt->capacity=Capacity;
 		newSt->index=0;
-		newSt->arr=(int*)malloc(Capacity*sizeof(int));
+		if(newSt->arr=(int*)malloc(Capacity*sizeof(int))){
+			newSt->capacity=Capacity;
+		}
+		else{
+			newSt->capacity=0;
+		}
 	}
 	return newSt;
 }
 void destroyDA(DA* array){
-	free(array->arr);
+	if(array){
+		free(array->arr);
+	}
 	free(array);
 }
 int insert(DA* array,int num){
 	int* temp;
 		if(array==NULL){
+		return 0;
+	}
+	if(array->arr==NULL){
 		return 0;
 	}
 	if ((array->index)==(array->capacity)){
