@@ -139,7 +139,7 @@ int Location(char* s1, char* s2){
 					break;
 				}
 			}
-			if (j=s2len){
+			if (j==s2len){
 				return i;
 			}
 		}
