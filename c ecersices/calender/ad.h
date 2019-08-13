@@ -16,12 +16,15 @@ typedef struct{
 }calender;
 
 calender* createAD(int Capacity);
-meeting* createMeet();
+meetingPtr createMeet();
 int insertApp(calender* cal,meetingPtr meetPtr);
 void removeApp(calender* cal,float begin);
 meeting* findApp(calender* cal,float begin);
 void destroyAD(calender* cal);
 void printAD(calender* cal);
+void shiftMRight(calender* calPtr,int ind);
+int loadFromFile(calender* calPtr,char* fileN);
+void saveInFile(calender* calPtr,char* fileN);
 
 #endif
 

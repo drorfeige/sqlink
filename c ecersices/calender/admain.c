@@ -10,10 +10,24 @@ int main(){
 	float time=0;
 	calender* calen;
 	meetingPtr pmeet;
-	if(calen=(calender*)malloc(sizeof(calender))){
+	FILE* fp;
+	char fname[32]="calender.txt";
+	calen=(calender*)malloc(sizeof(calender));
+	if(calen!=NULL){
 		if(calen=createAD(1)){
+			if((fp=fopen(fname,"r"))!=NULL){
+				fclose(fp);
+				ins=loadFromFile(calen, fname);
+				if(!ins){
+					printf("failed to load file %s\n",fname);
+				}
+			}
 			do{
 				func=menu();
+				/*open a file to write the calender to "", open with "r" 
+				another function to load file into calender array "loadFromFile", open with "w"
+				filename is calender.txt
+				add an if clause to check if the file exists and if not it destroys them*/
 				switch (func){
 					case 1:	
 						pmeet=createMeet();
@@ -51,6 +65,7 @@ int main(){
 	else{
 		printf("failed\n");
 	}
+	saveInFile(calen, fname);
 	destroyAD(calen);
 	return 0;
 }
