@@ -5,7 +5,7 @@
 int menu();
 
 int main(){	
-	int func=0;
+	int func=0,i=0;
 	unsigned int lines=0;
 	char fileName[32]="";
 	wordsInFile* wPtr;
@@ -30,6 +30,16 @@ int main(){
 				wPtr=extractWords(fileName);
 				if(wPtr!=NULL){
 					printWords(wPtr);
+					if (wPtr->wordArr){
+						for(i=0;i<wPtr->index;i++)
+						if(wPtr->wordArr[wPtr->index]){
+							if(wPtr->wordArr[wPtr->index]->m_word){
+								free(wPtr->wordArr[wPtr->index]->m_word);
+							}
+							free(wPtr->wordArr[wPtr->index]);
+						}
+						free(wPtr->wordArr);
+					}
 					free(wPtr);
 				}						
 				break;

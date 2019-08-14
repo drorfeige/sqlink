@@ -3,13 +3,13 @@
 
 typedef struct{
 	int num;
-	char m_word[32];
+	char* m_word;
 }Word;
 
 typedef struct{
 	int m_capacity;
 	int index;
-	char** wordArr;
+	Word** wordArr;
 }wordsInFile;
 
 wordsInFile* extractWords(char* filename);
