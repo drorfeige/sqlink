@@ -93,14 +93,14 @@ int rotateRight(unsigned int x, int N){  /*need to finish this function*/
 
 int setbits3(unsigned char x,int p,int n,unsigned char y){
 	int i=0;
-	char toPrint[64]="";
-	int temp=0,mask=1;;
-	mask<<=sizeof(int)*8-1;
+	char toPrint[16]="";
+	unsigned char temp=0,mask=1;;
+	mask<<=sizeof(char)*8-1;
 	/*print initial values*/
-	int2Bin(x, toPrint);
+	char2Bin(x, toPrint);
 	printf("x = %s",toPrint);
 	printf(" (binary)\n");	
-	int2Bin(y, toPrint);
+	char2Bin(y, toPrint);
 	printf("y = %s",toPrint);
 	printf(" (binary)\n");
 	/*algorithm*/
@@ -108,31 +108,33 @@ int setbits3(unsigned char x,int p,int n,unsigned char y){
 		return x;
 	}
 	for(i=0;i<p-n;i++){
-		temp<<=1;
+		temp>>=1;
 		if(x&1){
+			printf("x\n");
 			temp+=mask;
 		}
-		x<<=1;
-		y<<=1;
+		x>>=1;
 	}
 	for(i;i<p;i++){
-		temp<<=1;
+		temp>>=1;
 		if(y&1){
+			printf("y\n");
 			temp+=mask;
 		}
-		x<<=1;
-		y<<=1;
+		x>>=1;
+		y>>=1;
 	}
-	for(i;i<=sizeof(int)*8;i++){
-		temp<<=1;
+	for(i;i<sizeof(char)*8;i++){
+		temp>>=1;
 		if(x&1){
+			printf("x\n");
 			temp+=mask;
 			}
-		x<<=1;
-		y<<=1;
+		x>>=1;
+		y>>=1;
 	}
 	/*print answer*/
-	int2Bin(temp, toPrint);
+	char2Bin(temp, toPrint);
 	printf("x after setbits = %s",toPrint);
 	printf(" (binary)\n");
 	return x;		
