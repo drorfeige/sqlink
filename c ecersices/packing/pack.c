@@ -46,8 +46,12 @@ int unionPack(unsigned char* str){
 
 
 void printPack(unsigned char* str, int num){
-	int i=0,fifteen=0x0F ;
+	int i=0,fifteen=1;
 	unsigned char temp;
+	for(i=0;i<3;i++){
+		fifteen<<=1;
+		fifteen+=1;
+	}
 	for (i=0;i<num; i++){
 		if(i%2!=0){
 			temp=str[i/2]&fifteen;
