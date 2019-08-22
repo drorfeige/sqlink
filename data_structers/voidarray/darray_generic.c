@@ -145,11 +145,11 @@ AdtStatus   darrayItemsNum(darray *dArr, int*  _numOfItems){
 	return OK;
 
 }
-static void swap(void* x, void* y){
+static void swap(void** x, void** y){
 	void* temp;
-	temp =x;
-	x=y;
-	y=temp;
+	temp=*x;
+	*x=*y;
+	*y=temp;
 
 }
 static int partition (void** arr,int low, int high, elementCompare compareFunc){
@@ -160,11 +160,11 @@ static int partition (void** arr,int low, int high, elementCompare compareFunc){
 	i = (low - 1); 
 	for (j = low; j <= high- 1; j++){
 		if (compareFunc(arr[j],pivot)<=0){
-		i++;    
-		swap(arr[i],arr[j]);
+			i++;    
+			swap(arr+i,arr+j);
 	        }
 	}
-	swap(arr[i+1], arr[high]);
+	swap(arr+i+1, arr+high);
 	return i+1;
 }
 static void quickSort(void** arr, int low,int high, elementCompare compareFunc){

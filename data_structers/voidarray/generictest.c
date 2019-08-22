@@ -62,7 +62,7 @@ int main(int argc,char* argv[]){
 				scanf("%d",&ans);
 				status=darrayGet(dA, ans, (void**)&pt);
 				if(status==OK){
-					printf("the value of x is %d",pt->x);
+					printf("the value of x is %d ",pt->x);
 					printf("the value of y is %d\n",pt->y);
 				}
 				break;

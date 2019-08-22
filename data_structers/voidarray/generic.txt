@@ -1,0 +1,2 @@
+delted point: x=1 y=1
+delted point: x=23 y=56
