@@ -128,12 +128,12 @@ int addPoint(struct points** pt){
 int ptComp(void *PT1,void *PT2){
 	struct points *pt1;
 	struct points *pt2;
-	pt1 = (struct points*)PT2;
+	pt1 = (struct points*)PT1;
 	pt2 = (struct points*)PT2;
 	if(pt1==NULL || pt2==NULL){
 		return 0;
 	}
-	return (pt1->x)*(pt1->x)+(pt1->y)*(pt1->y)-(pt2->x)*(pt2->x)+(pt2->y)*(pt2->y);
+	return (((pt1->x)*(pt1->x)+(pt1->y)*(pt1->y))-((pt2->x)*(pt2->x)+(pt2->y)*(pt2->y)));
 }
 
 void ptDestroy(void *PT,  void *FP){

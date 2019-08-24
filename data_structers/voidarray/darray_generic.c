@@ -78,7 +78,7 @@ AdtStatus   darrayGet(darray *dArr, size_t _index, void **_item){
 	if(dArr->m_Arr==NULL){
 		return NULL_POINTER;
 	}
-	if(_index>dArr->m_index){
+	if((int)_index>dArr->m_index-1){
 		return INVALID_INDEX;
 	}
 	/*get*/
@@ -95,7 +95,7 @@ AdtStatus   darraySet(darray *dArr, size_t _index, void  *_item){
 	if(dArr->m_Arr==NULL){
 		return NULL_POINTER;
 	}
-	if(_index>dArr->m_index){
+	if((int)_index>dArr->m_index-1){
 		return INVALID_INDEX;
 	}
 	/*set*/
@@ -153,19 +153,21 @@ static void swap(void** x, void** y){
 
 }
 static int partition (void** arr,int low, int high, elementCompare compareFunc){
+	int pivotInsertIndex=0;
 	int i=0;
-	int j=0;
+	int ans=0;
 	void* pivot;  
 	pivot = arr[high];
-	i = (low - 1); 
-	for (j = low; j <= high- 1; j++){
-		if (compareFunc(arr[j],pivot)<=0){
-			i++;    
-			swap(arr+i,arr+j);
+	pivotInsertIndex = low;
+	for (i = low; i < high; i++){
+		ans=compareFunc(arr[i],pivot);
+		if (ans<=0){
+			swap(arr+pivotInsertIndex,arr+i);
+			pivotInsertIndex++;
 	        }
 	}
-	swap(arr+i+1, arr+high);
-	return i+1;
+	swap(arr+pivotInsertIndex, arr+high);
+	return pivotInsertIndex;
 }
 static void quickSort(void** arr, int low,int high, elementCompare compareFunc){
 	int pi;
