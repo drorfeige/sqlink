@@ -51,7 +51,6 @@ hashStatus hashtableInsert(hash hashP,void* val, void* key){
 	hashKey=hashP->m_hf(key);
 	index=hashKey%hashP->m_size;
 	if((FindKey(hashP->m_table[index],key, hashP->m_comp,NULL ,&new))==OK){
-		new->m_val=val;
 		return ALREADY_IN_TABLE;
 	}
 	new=(node*)malloc(sizeof(node));
@@ -88,6 +87,9 @@ hashStatus FindKey(node* nd,void* key,compareFunc comp, node** former, node** cu
 			find=OK;
 			if(current!=NULL){
 				*current=nd;
+			}
+			if(former!=NULL){
+				*former=Former;
 			}
 			break;
 		}
@@ -159,9 +161,14 @@ hashStatus hashtableDelete(hash hashP, void* key,destroyFunc des,destroyFunc des
 	hashKey=hashP->m_hf(key);
 	index=hashKey%hashP->m_size;
 	if((FindKey(hashP->m_table[index],key, hashP->m_comp, &Last ,&toDelete))==OK){
-		Last->m_next=toDelete->m_next;
+		if(Last!=NULL){
+			Last->m_next=toDelete->m_next;
+		}
+		else{
+			hashP->m_table[index]=toDelete->m_next;
+		}
 		if(des!=NULL){
-			des(toDelete->m_key);
+			des(toDelete->m_val);
 		}
 		if(des2!=NULL){
 			des2(toDelete->m_key);
@@ -184,9 +191,10 @@ hashStatus hashtableForEach(hash hashP, compareFunc someFunc){
 		if(arr[i]!=NULL){
 			nd=arr[i];
 			while(nd!=NULL){
-				if((someFunc(nd->m_val,NULL))==0){
+				if((someFunc(nd->m_val,nd->m_key))==0){
 					return NOT_IN_TABLE;
 				}
+				nd=nd->m_next;
 			}	
 		}
 	}
