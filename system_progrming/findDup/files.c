@@ -38,9 +38,12 @@ void scanDir(char *basePath,void* hashT){
 		if(key==NULL || Path==NULL){
 			free(key);
 			free(Path);
+			printf("allocation error\n");
+			return;
 		}
+		strcpy(Path, path);
 		if((MD5Create(path,key)==1)){
-			isDup(key, path,(hash)hashT);
+			isDup(key, Path,(hash)hashT);
 		}	
 		scanDir(path,hashT);
 		}

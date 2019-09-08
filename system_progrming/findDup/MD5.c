@@ -1,6 +1,8 @@
 #include "MD5.h"
 #include <openssl/md5.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 
 
@@ -13,7 +15,6 @@ int MD5Create(char* path, char* hashKey){
 	char buf[512];
 	ssize_t bytes;
 	int fd;
-	unsigned char out[MD5_DIGEST_LENGTH];
 	fd= open(path, O_RDONLY);
 	if(fd < 0){
 		return 0;
@@ -25,7 +26,7 @@ int MD5Create(char* path, char* hashKey){
 		MD5_Update(&c, buf, bytes);
 	        bytes=read(fd, buf, 512);
 	}
-	MD5_Final(hashKey, &c);
+	MD5_Final((unsigned char*)hashKey, &c);
 	return 1;
 }
 
