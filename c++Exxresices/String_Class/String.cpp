@@ -5,7 +5,7 @@
 
 
 String::String(){
-	size=0;
+	//size=0;
 	string=createFrom("");
 }
 
@@ -30,7 +30,7 @@ String& String::operator=(const String& str){
 char* String::createFrom(const char* str){
 	char* tmp= new char[strlen(str)+1];
 	strcpy(tmp,str);
-	size=strlen(tmp);
+	//size=strlen(tmp);
 	return tmp;
 }
 
@@ -39,7 +39,8 @@ void String::print() const{
 }
 
 size_t String::getLength() const{
-	return size;
+	//return size;
+	return strlen(string);
 }
 
 void String::setString(const char* str){

@@ -16,7 +16,7 @@ class String{
 		void print() const;
 	private:
 		char* string;
-		size_t size;
+		//size_t size;
 		char* createFrom(const char* str);
 };
 
