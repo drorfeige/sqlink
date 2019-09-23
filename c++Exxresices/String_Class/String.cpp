@@ -45,7 +45,7 @@ char* String::createFrom(const char* str){
 }
 
 void String::print() const{
-	printf("%s",m_string);
+	cout << m_string;
 }
 
 size_t String::getLength() const{
