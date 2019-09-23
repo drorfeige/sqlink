@@ -16,10 +16,10 @@ void recieveStr(char* rStr){
 int main(int argc,char** argv){
 	int action;
 	char* recieve=new char[32];
-	String str2;
-	String str3;
-	String str1=String("string from constant char");
-	String str4;
+	//String str2;
+	//String str3;
+	String str1("string from constant char");
+	//String str4;
 	do{
 		action=menu();
 		switch (action){
@@ -43,16 +43,22 @@ int main(int argc,char** argv){
 				printf("%d\n",str1.myStrcmp((const char*) recieve));
 				break;
 			case 6:
-				str2=String(str1);
-				str2.print();
+				{
+					String str2(str1);
+					str2.print();
+				}
 				break;
 			case 7:
-				str3=String(str1.getString());
-				str3.print();
+				{
+					String str3(str1.getString());
+					str3.print();
+				}
 				break;
 			case 8:
-				str4=str1;
-				str4.print();
+				{
+					String str4=str1;
+					str4.print();
+				}
 				break;
 			default:
 				break;
