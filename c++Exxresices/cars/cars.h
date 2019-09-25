@@ -15,9 +15,10 @@ class car_t{
 		inline const string& getName() const{return m_name;}
 		inline GEAR getGear() const{return m_gear;}
 		inline bool operator<(const car_t& car2) const{return m_cc<car2.getCap();}
-		car_t& operator=(const car_t& car2) const{m_cc=car2.getCap();return *this;}
+		car_t& operator=(const car_t& car2);
 		inline bool compareCars(const car_t& car2){return m_name==car2.m_name;}
 		inline unsigned int getCap() const{return m_cc;}
+		inline unsigned int getId()const{return m_id;}
 	protected:
 		~car_t(){}
 		inline void setName(string name){m_name=name;}
@@ -41,12 +42,15 @@ car_t::car_t(unsigned int cap): m_id(m_did){
 	m_did++;
 }
 
-car_t::(car_t& cr): m_id(m_did){
+car_t::car_t(const car_t& cr): m_id(m_did){
 	m_cc=cr.m_cc;
 	m_did++;
 }
 
-
+car_t& car_t::operator=(const car_t& car2){
+	m_cc=car2.getCap();
+	return *this;
+}
 #endif
 
 
