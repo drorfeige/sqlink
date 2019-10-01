@@ -1,6 +1,8 @@
 #ifndef MEM_MANAGER_H
 #define MEM_MANAGER_H
 
+#include <stdlib.h>
+
 class memManager_t{
 	public:
 		memManager_t(){m_actualSize=0;m_currPosition=0;}
@@ -18,14 +20,14 @@ class memManager_t{
 	private:
 		size_t m_actualSize;
 		size_t m_currPosition;
-}
+};
 
-inline bool memManager::setPos(size_t newPos){
+inline bool memManager_t::setPos(size_t newPos){
 	if(newPos<m_actualSize){
 		m_currPosition=newPos;
-		return TRUE;			
+		return 1;			
 	}
-	return FALSE;	
+	return 0;	
 }
 
 #endif 
