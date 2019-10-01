@@ -11,7 +11,7 @@ class memManager_t{
 		inline bool isEmpty() const{return m_actualSize==0;}
 		inline size_t getActSize() const{return m_actualSize;}
 		inline size_t getPos() const{return m_currPosition;}
-		inline bool setPos(size_t newPos);{m_currPosition=newPos<m_actualSize?newPos:m_currPosition;}	
+		inline bool setPos(size_t newPos);	
 	protected:
 		virtual ~memManager_t(){};
 		inline void setActSize(size_t newSize){m_actualSize=newSize;}
@@ -29,3 +29,10 @@ inline bool memManager::setPos(size_t newPos){
 }
 
 #endif 
+
+
+
+
+
+
+
