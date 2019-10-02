@@ -19,6 +19,7 @@ class memPool_t: public memManager_t{
 		//set page size
 		// get page size
 	private:
+		size_t internalWrite(const void* buffer, size_t bytesToWrite, size_t begin);
 		size_t pageNum(size_t index, size_t* position) const;
 		vector<memPage_t*>v;
 		
@@ -32,52 +33,56 @@ memPool_t::~memPool_t(){
 }
 
 size_t memPool_t::read(void* buffer, size_t bytesToRead){
-	// check if there is something to read
 	size_t begin=getPos();
-	size_t end=getActSize();
-	if(begin<=end || bytesToRead==0){
-		return 0;
-	}
-	// if there is then how many bytes are there to read
-	size_t actToRead=(bytesToRead<(end-begin))?bytesToRead:end-begin;
-	// find start page
-	size_t position;
-	size_t pi=pageNum(actToRead,&position);
-	// read page by page in a loop
-	size_t remain=actToRead;
-	remain-=v[pi]->read(buffer,remain,position);
-	pi++;
-	while(remain>0){
-		remain-=v[pi]->read(buffer,remain);
-		pi++;
-	}
-	return actToRead;
+	return read( buffer, bytesToRead, begin);
 }
+
 size_t memPool_t::read(void* buffer, size_t bytesToRead, size_t pos){
-		size_t end=getActSize();
-	if(pos<=end || bytesToRead==0){
+	size_t end=getActSize();
+	if(pos>=end || bytesToRead==0){
 		return 0;
 	}
 	// if there is then how many bytes are there to read
 	size_t actToRead=(bytesToRead<(end-pos))?bytesToRead:end-pos;
 	// find start page
+	bool isGood=1;
+	while(isGood){
+		try{	
+			isGood=0;
+			setPos(pos+actToRead);
+		}catch(size_t max){
+			isGood=1;
+			actToRead=max-pos;
+		}
+	}
 	size_t position;
-	size_t pi=pageNum(actToRead,&position);
+	size_t pi=pageNum(pos,&position);
 	// read page by page in a loop
 	size_t remain=actToRead;
-	remain-=v[pi]->read(buffer,remain,position);
+	size_t offset=0;
+	offset=offset+v[pi]->read(buffer,remain,position);
+	remain=actToRead-offset;
 	pi++;
 	while(remain>0){
-		remain-=v[pi]->read(buffer,remain);
+		offset=offset+v[pi]->read((char*)buffer+offset,remain,0);
+		remain=actToRead-offset;
 		pi++;
 	}
 	return actToRead;
 }
+
 size_t memPool_t::write(const void* buffer, size_t bytesToWrite){
-	return 0;
+	size_t begin=getPos();
+	return internalWrite(buffer, bytesToWrite, begin);
 }
+
 size_t memPool_t::write(const void* buffer, size_t bytesToWrite, size_t pos){
-	return 0;
+	size_t begin=getPos();
+	if(begin<pos){
+		return 0;
+	}
+	begin=pos;
+	return internalWrite(buffer, bytesToWrite, begin);
 }
 
 size_t memPool_t::pageNum(size_t index, size_t* position) const{
@@ -96,6 +101,35 @@ size_t memPool_t::pageNum(size_t index, size_t* position) const{
 	}
 	return i;
 }
+
+size_t memPool_t::internalWrite(const void* buffer, size_t bytesToWrite, size_t begin){
+	size_t position;
+	size_t pi=pageNum(begin,&position);
+	// read page by page in a loop
+	size_t remain=bytesToWrite;
+	size_t offset=0;
+	offset+=v[pi]->write(buffer,remain,position);
+	remain=bytesToWrite-offset;
+	pi++;	
+	while(remain>0){
+		if(pi==v.size()){
+			memPage_t* pg=new memPage_t();
+			v.push_back(pg);
+		}
+		offset+=v[pi]->write((char*)buffer+offset,remain);
+		remain=bytesToWrite-offset;
+		pi++;
+	}
+	if(begin+bytesToWrite>getActSize()){
+		setActSize(begin+bytesToWrite);
+	}
+	try{
+		setPos(begin+bytesToWrite);
+	}catch(size_t){
+	}
+	return bytesToWrite;		
+}
+
 
 #endif 
 
