@@ -14,10 +14,10 @@ class Street_t{
 		Street_t(){}
 		Street_t(const Street_t& oldS);
 		Street_t& operator=(const Street_t& oldS);
-		inline void setStreetID(const SID newS);
-		inline SID getStreetID() const;
+		inline void setStreetID(const SID& newS);
+		inline SID& getStreetID() const;
 		void AddBuilding2Street(const Building_t<BID>& newB);
-		Building_t<BID>& getBuilding(BID bid) const;
+		Building_t<BID>& getBuilding(BID& bid) const;
 		inline size_t getSize() const;
 	private:
 		SID m_SID;
@@ -46,13 +46,13 @@ Street_t<SID,BID>& Street_t<SID,BID>::operator=(const Street_t<SID,BID>& oldS){
 
 
 template <class SID, class BID>
-inline void Street_t<SID,BID>::setStreetID(const SID newS){
+inline void Street_t<SID,BID>::setStreetID(const SID& newS){
 	m_SID=newS;
 }
 
 template <class SID, class BID>
-inline SID Street_t<SID,BID>::getStreetID() const{
-	return m_SID;
+inline SID& Street_t<SID,BID>::getStreetID() const{
+	return &m_SID;
 }
 
 template <class SID, class BID>
@@ -61,11 +61,11 @@ void Street_t<SID,BID>::AddBuilding2Street(const Building_t<BID>& newB){
 }
 
 template <class SID, class BID>
-Building_t<BID>& Street_t<SID,BID>::getBuilding(BID bid) const{
+Building_t<BID>& Street_t<SID,BID>::getBuilding(BID& bid) const{
 	size_t i;
 	for(i=0;i<getSize();i++){
 		if(sv[i].getBuildingID()==bid){
-			return sv[i];
+			return &sv[i];
 		}
 	}
 	throw i;
