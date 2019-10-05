@@ -9,20 +9,20 @@ class Building_t{
 		Building_t(const Building_t& oldT);
 		Building_t& operator=(const Building_t& oldT);
 		inline void setBuidingID(const TB& newT);
-		inline TB& getBuildingID() const;
+		inline const TB& getBuildingID() const;
 	private:
 		TB m_BID;
 };
 
 template <class TB>
 Building_t<TB>& Building_t<TB>::operator=(const Building_t<TB>& oldT){
-	m_BID=oldT.m_BID;
+	m_BID=oldT.getBuildingID();
 	return *this;
 }
 
 template <class TB>
 Building_t<TB>::Building_t(const Building_t<TB>& oldT){
-	m_BID=oldT.m_BID;
+	m_BID=oldT.getBuildingID();
 }
 
 template <class TB>
@@ -31,7 +31,7 @@ inline void Building_t<TB>::setBuidingID(const TB& newT){
 }
 
 template <class TB>
-inline TB& Building_t<TB>::getBuildingID() const{
+inline const TB& Building_t<TB>::getBuildingID() const{
 	return m_BID;
 }
 
