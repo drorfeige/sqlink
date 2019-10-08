@@ -6,7 +6,7 @@
 using namespace std;
 
 int main(){
-	tContainer_t<int, list<int*> > c1;
+	tContainer_t<int, vector<int*> > c1;
 	cout << "is container empty: "<< c1.isEmpty() << "\n";
 	for (int i=0; i<7; ++i){
 		int* forCont= new int;
