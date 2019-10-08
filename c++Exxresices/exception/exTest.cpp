@@ -5,8 +5,7 @@
 using namespace std;
 
 void throwTest(){
-	TException_t<float> tOb(__FILE__,__LINE__,"a float was thrown as a test",5.43);
-	throw tOb;
+	throw TException_t<float>(5.43,__FILE__,__LINE__,"a float was thrown as a test");
 
 }
 
@@ -14,10 +13,10 @@ int main(){
 	try{
 		throwTest();
 	}catch(TException_t<float> cOb){
+		cout<< cOb.getObject()<< "\n";
 		cout<< cOb.getSource()<<"\n";
 		cout<< cOb.getLine()<< "\n";
 		cout<< cOb.getDescript()<< "\n";
-		cout<< cOb.getObject()<< "\n";
 	}
 	return 0;
 }
