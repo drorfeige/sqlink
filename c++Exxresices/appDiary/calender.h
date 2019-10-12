@@ -10,14 +10,13 @@ class calender_t{
 		calender_t(){}
 		calender_t(const calender_t& oldC);
 		calender_t& operator=(const calender_t& oldC);
-		bool insertApp(const meeting_t* newM);
+		bool insertApp(meeting_t* newM);
 		meeting_t* removeApp(float start);
 		const meeting_t* findApp(float start) const;
 		void cleanAD();
-		bool getFromFile(const char* fileName);
-		void copyToFile(const char* fileName) const;
 	private:
 		typedef typename map<float,meeting_t*>::iterator iter_t;
+		typedef typename map<float,meeting_t*>::const_iterator c_iter_t;
 		map<float,meeting_t*> m_mm;
 };
 

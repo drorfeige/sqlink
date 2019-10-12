@@ -8,7 +8,7 @@ using namespace std;
 class meeting_t{
 	public:
 		virtual ~meeting_t(){}
-		meeting_t(const float& begin, const float& end, const string& subject);
+		meeting_t(const float& begin, const float& end,const string& subject="");
 		meeting_t(const meeting_t& oldM);
 		const string& getSubject() const{return m_subject;}
 		const float& getBegin() const{return m_begin;}
@@ -19,7 +19,6 @@ class meeting_t{
 		const float m_begin;
 		const float m_end;
 		string m_subject;
-		
 };
 
 

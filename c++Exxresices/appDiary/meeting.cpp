@@ -3,7 +3,7 @@
 
 using namespace std;
 
-meeting_t::meeting_t(const float& begin, const float& end, const string& subject=""):m_begin(begin),m_end(end){
+meeting_t::meeting_t(const float& begin, const float& end,const string& subject=""):m_begin(begin),m_end(end){
 	if(begin<0 || begin>=24){
 		throw 1;
 	}	
