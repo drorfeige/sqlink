@@ -8,8 +8,8 @@ using namespace std;
 calender_t::calender_t(const calender_t& oldC){
 	c_iter_t it;
 	for(it=oldC.m_mm.begin();it!=oldC.m_mm.end();it++){
-	meeting_t nm(*(it->second));
-	insertApp(&nm);
+	meeting_t* nm= new meeting_t(*(it->second));
+	insertApp(nm);
 	}
 }
 
@@ -18,8 +18,8 @@ calender_t& calender_t::operator=(const calender_t& oldC){
 		cleanAD();
 		c_iter_t it;
 		for(it=oldC.m_mm.begin();it!=oldC.m_mm.end();it++){
-			meeting_t nm(*(it->second));
-			insertApp(&nm);
+			meeting_t* nm= new meeting_t(*(it->second));
+			insertApp(nm);
 		}
 	}
 	return *this;
@@ -68,7 +68,7 @@ bool calender_t::insertApp(meeting_t* newM){
 		m_mm[newM->getBegin()]=newM;
 		return 1;
 	}
-	if(newM->getBegin() >= m_mm.rbegin()->second->getBegin()){/*case of meeting being at the end*/
+	if(newM->getBegin() >= m_mm.rbegin()->second->getEnd()){/*case of meeting being at the end*/
 		m_mm[newM->getBegin()]=newM;
 		return 1;
 	}
