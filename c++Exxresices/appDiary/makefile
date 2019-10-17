@@ -1,7 +1,7 @@
 ﻿CFLAGS  = -pedantic -g -ansi -Wall 
 
 cal : calenderMain.o calender.o meeting.o
-	g++ -o cal calenderMain.cpp 
+	g++ -o cal calenderMain.o calender.o meeting.o 
 
 calenderMain.o : calenderMain.cpp calender.h meeting.h
 	g++ -c $(CFLAGS) calenderMain.cpp

@@ -14,12 +14,13 @@ int menu(){
 	return s1;
 }
 
-meeting_t* newMeeting(){
+meeting_t* newMeeting(float* forTesting){
 	float start;
 	float finish;
 	cout << "choose start time\n";
 	cin >> start;
-	cout << "choose finish time";
+	*forTesting=start;
+	cout << "choose finish time\n";
 	cin >> finish;
 	try{
 		meeting_t* nm=new meeting_t(start,finish);
@@ -29,7 +30,7 @@ meeting_t* newMeeting(){
 		nm->setSubject(s1);
 		return nm;
 	}catch(int c){
-		cout << "wrong input.\n";
+		cout << "wrong input  " << c << "\n";
 		return 0;
 	}
 }
@@ -37,12 +38,14 @@ meeting_t* newMeeting(){
 int main(){
 	calender_t c1;
 	int sel;
+	float lastStart=0;
+	float* lSp=&lastStart;
 	do{
 		sel=menu();
 		switch (sel){
 			case 1:
 				{
-					meeting_t* m1=newMeeting();
+					meeting_t* m1=newMeeting(lSp);
 					if(m1==0) break;
 					if(c1.insertApp(m1)){
 						cout<< "insertion succesfull\n";
@@ -76,17 +79,36 @@ int main(){
 						cout << "appoinment not found\n";
 					}
 					else{
-						cout << m3->getSubject();
+						cout << m3->getSubject() << "\n";
 					}
 					break;
 				}
 			case 4:
 				c1.cleanAD();
 				break;
-			case 5:
-				break;
-			case 6:
-				break;
+			case 5:{
+					calender_t c5(c1);
+					const meeting_t* m5=c5.findApp(*lSp);
+					if(m5==0){
+						cout << "appoinment not found" << *lSp <<"\n";
+					}
+					else{
+						cout << m5->getSubject() << "\n";
+					}
+					break;
+				}
+			case 6:{
+					calender_t c6;
+					c6=c1;
+					const meeting_t* m6=c6.findApp(*lSp);
+					if(m6==0){
+						cout << "appoinment not found\n";
+					}
+					else{
+						cout << m6->getSubject() << "\n";
+					}
+					break;
+				}
 			default:
 				break;
 		}

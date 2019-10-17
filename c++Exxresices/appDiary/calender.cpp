@@ -1,4 +1,5 @@
 #include "calender.h"
+#include "meeting.h"
 #include <algorithm>
 #include <map>
 
@@ -6,8 +7,9 @@ using namespace std;
 
 calender_t::calender_t(const calender_t& oldC){
 	c_iter_t it;
-	for(it=oldC.m_mm.begin();it!=oldC.m_mm.begin();it++){
-	insertApp(it->second);
+	for(it=oldC.m_mm.begin();it!=oldC.m_mm.end();it++){
+	meeting_t nm(*(it->second));
+	insertApp(&nm);
 	}
 }
 
@@ -15,8 +17,9 @@ calender_t& calender_t::operator=(const calender_t& oldC){
 	if(this!=&oldC){
 		cleanAD();
 		c_iter_t it;
-		for(it=oldC.m_mm.begin();it!=oldC.m_mm.begin();it++){
-			insertApp(it->second);
+		for(it=oldC.m_mm.begin();it!=oldC.m_mm.end();it++){
+			meeting_t nm(*(it->second));
+			insertApp(&nm);
 		}
 	}
 	return *this;
@@ -45,6 +48,7 @@ meeting_t* calender_t::removeApp(float start){
 		return 0;
 	}
 	meeting_t* temp=it->second;
+	m_mm.erase(start);
 	return temp;
 }
 
@@ -78,11 +82,10 @@ bool calender_t::insertApp(meeting_t* newM){
 					if(it->second->getBegin() >= newM->getEnd()){
 						m_mm[newM->getBegin()]=newM;
 						return 1;
-						break;
 					}
 					else{
 						return 0;
-					{
+					}
 				}
 			}					
 		}
