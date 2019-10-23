@@ -1,13 +1,9 @@
 ﻿CFLAGS  = -pedantic -g -ansi -Wall 
 
-cal : calenderMain.o calender.o meeting.o
-	g++ -o cal calenderMain.o calender.o meeting.o 
+fl : fileMain.o 
+	g++ -o fl fileMain.o  
 
-calenderMain.o : calenderMain.cpp calender.h meeting.h
-	g++ -c $(CFLAGS) calenderMain.cpp
+fileMain.o : fileMain.cpp virtlIO.h asciiIO.h binIO.h
+	g++ -c $(CFLAGS) fileMain.cpp
 
-calender.o : calender.cpp calender.h meeting.h
-	g++ -c $(CFLAGS) calender.cpp
 
-meeting.o : meeting.cpp meeting.h
-	g++ -c $(CFLAGS) meeting.cpp
