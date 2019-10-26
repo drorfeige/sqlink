@@ -4,16 +4,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
 
 using namespace std;
 
 class analyzer_t{
 	public:
 		virtual ~analyzer_t(){}
-		analyzer_t(){main=0;ifCount=0;}
-		void analyze(const vector<string>& tokens){}
-		void endAnalyzer(){main=0;ifCount=0;predefinedF=0;
-                                     variables.clear();}
+		analyzer_t();
+		void analyze(const vector<string>& tokens);
+		void endAnalyzer();
 	private:
 		analyzer_t(const analyzer_t& newA);
 		analyzer_t& operator=(const analyzer_t& newA);
@@ -21,16 +21,22 @@ class analyzer_t{
 		bool main;
 		bool predefinedF;
 		unsigned int ifCount;
-		vector<string> variables;
+		set<string> variables;
 		unsigned int plus;
 		unsigned int minus;
-		unsigned int curlyBrackets;
-		unsigned int squareBrackets;
-		unsigned int circleBrackets;
-		vector<string> predefinedV;
-		vector<string> operators;
-		vector<string> keyWords;
+		unsigned int curlyBraces;
+		unsigned int squareBraces;
+		unsigned int circleBraces;
+		set<string> predefinedV;
+		set<string> operators;
+		set<string> keyWords;
+		void predefinedHandler();
+		void keywordsHanler(){}
+		void operatorsHandler(){}
+		void variableHandler(){}
+		void bracesHandler(){}
 		
+			
 };
 
 #endif
