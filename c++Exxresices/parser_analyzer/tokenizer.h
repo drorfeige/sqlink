@@ -1,37 +1,26 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-#include <string>
-#include <vector>
 
-using namespace std;
+#include <queue>
+#include <string>
+
+
 
 class tokenizer_t{
 	public:
 		virtual ~tokenizer_t(){}
-		tokenizer_t(){}
-		inline void cleanTokens(){tokens.clear();}
-		const vector<string>& tokenize(string line){
-			tokens.clear();
-			const char delimiters[]=" \t\v\f\r\n;(){}[]<>=+-&*";
-			size_t found = line.find_first_of(delimiters);
-			size_t begin=0;
-			while (found!=string::npos){
-				if(begin!=found){
-					tokens.push_back(line.substr(begin,found-begin));
-				}
-				if(!isspace(line[found])){
-					tokens.push_back(line.substr(found,1));
-				}
-				begin=found+1; 
-				found=line.find_first_of(delimiters,begin);
-			}
-			return tokens;
+		tokenizer_t();
+		std::queue<std::string>& tokenize(const std::string& line);
+		inline const std::string& setDelimiters(const std::string& newDel){ 
+			delimiters=newDel; return delimiters;
 		}
+		inline const std::string& getDelimiters() const{return delimiters;}
 	private:
 		tokenizer_t(const tokenizer_t& newT);
 		tokenizer_t& operator=(const tokenizer_t& newT);
-		vector<string> tokens;
+		std::queue<std::string> tokens;
+		std::string delimiters; 
 };
 
 
