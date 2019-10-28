@@ -188,7 +188,9 @@ void analyzer_t::variableHandler(const string& var){
 			}
 		}
 		else{
-			cout << "line "<< lineNum << ": " << var << " is not declared"  <<endl;	
+			if(!variables.count(var)){
+				cout << "line "<< lineNum << ": " << var << " is not declared"  <<endl;
+			}
 		}
 		predefinedF=0;
 	}
